@@ -1,0 +1,88 @@
+openapi: 3.0.1
+info:
+  title: Audio Files API
+  description: API for managing and accessing audio file metadata.
+  version: 1.0.0
+servers:
+- url: https://34.49.85.154.nip.io/audio-files/v1
+
+security:
+  - ApiKeyAuth: []
+
+paths:
+  /metadata/{doc_id}:
+    get:
+      summary: Retrieve metadata for an audio file
+      parameters:
+      - name: doc_id
+        in: path
+        description: Unique identifier of the audio file document
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: Successful retrieval of metadata
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AudioFileMetadata'
+        "401":
+          description: Unauthorized
+          content: {}
+        "404":
+          description: Audio file not found
+          content: {}
+
+components:
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: Authorization
+  schemas:
+    AudioFileMetadata:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Full document name (includes project and database information)
+          example: projects/alchemy-genai-ccinsight/databases/(default)/documents/audio-files-metadata/__id5642368648740864__
+        fields:
+          type: object
+          description: Key-value pairs of metadata fields
+          properties:
+            timestamp:
+              type: object
+              properties:
+                integerValue:
+                  type: string  # Note: integerValue is actually a string in the example
+                  example: "1719203950564"
+            gcsUri:
+              type: object
+              properties:
+                stringValue:
+                  type: string
+                  example: gs://alchemy-genai-ccinsight-operation-insights-audio-files/__id5642368648740864__sample-customer-recording-1719203950564.mp3
+            caseid:
+              type: object
+              properties:
+                stringValue:
+                  type: string
+                  example: "333"
+            status:
+              type: object
+              properties:
+                stringValue:
+                  type: string
+                  example: "processing"
+        createTime:
+          type: string
+          description: Timestamp of metadata creation
+          format: date-time
+          example: 2024-06-24T04:39:10.624309Z
+        updateTime:
+          type: string
+          description: Timestamp of last metadata update
+          format: date-time
+          example: 2024-06-24T04:39:10.656820Z

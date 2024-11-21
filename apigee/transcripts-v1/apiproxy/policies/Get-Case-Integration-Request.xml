@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<SetIntegrationRequest continueOnError="false" enabled="true" name="Get-Case-Integration-Request">
+    <DisplayName>Get Case Integration Request</DisplayName>
+    <ProjectId>replaced_by_config</ProjectId>
+    <IntegrationName>BigQueryIntegration</IntegrationName>
+    <IntegrationRegion>replaced_by_config</IntegrationRegion>
+    <ApiTrigger>api_trigger/BigQueryIntegration_getCase</ApiTrigger>
+    <Parameters>
+        <Parameter name="case_id" type="string" ref="flow.caseId"/>
+    </Parameters>
+    <Request>flow.icRequest</Request>
+</SetIntegrationRequest>

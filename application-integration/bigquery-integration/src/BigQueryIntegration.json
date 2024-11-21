@@ -1,0 +1,457 @@
+{
+	"description": "\n # Overview\nThis integration gets all cases from BigQuery and maps the data to the opportunity.\n\n## Orchestration\n1. The integration exposes an API and can be triggered with a REST call.\n2. It gets all cases from BigQuery.\n3. It gets a case from BigQuery.\n4. It maps the data from the case to the opportunity.",
+	"snapshotNumber": "8",
+	"triggerConfigs": [
+		{
+			"label": "Get Case API",
+			"triggerType": "API",
+			"triggerNumber": "2",
+			"triggerId": "api_trigger/BigQueryIntegration_getCase",
+			"startTasks": [
+				{
+					"taskId": "4"
+				}
+			],
+			"properties": {
+				"Trigger name": "BigQueryIntegration_getCase"
+			}
+		},
+		{
+			"label": "Get All Cases API",
+			"triggerType": "API",
+			"triggerNumber": "1",
+			"triggerId": "api_trigger/BigQueryIntegration_getAllCases",
+			"startTasks": [
+				{
+					"taskId": "2"
+				}
+			],
+			"properties": {
+				"Trigger name": "BigQueryIntegration_getAllCases"
+			}
+		},
+		{
+			"label": "Get Case Action Items",
+			"triggerType": "API",
+			"triggerNumber": "3",
+			"triggerId": "api_trigger/BigQueryIntegration_GetCaseActionItems",
+			"startTasks": [
+				{
+					"taskId": "5"
+				}
+			],
+			"properties": {
+				"Trigger name": "BigQueryIntegration_GetCaseActionItems"
+			}
+		}
+	],
+	"taskConfigs": [
+		{
+			"task": "GenericConnectorTask",
+			"taskId": "2",
+			"parameters": {
+				"actionName": {
+					"key": "actionName",
+					"value": {
+						"stringValue": ""
+					}
+				},
+				"config": {
+					"key": "config",
+					"value": {}
+				},
+				"connectionName": {
+					"key": "connectionName",
+					"value": {
+						"stringValue": "$`CONFIG_CONNECTION_NAME`$"
+					}
+				},
+				"connectionVersion": {
+					"key": "connectionVersion",
+					"value": {
+						"stringValue": "projects/<PROJECT_ID>/locations/global/providers/gcp/connectors/bigquery/versions/1"
+					}
+				},
+				"connectorInputPayload": {
+					"key": "connectorInputPayload",
+					"value": {
+						"jsonValue": "null"
+					}
+				},
+				"connectorOutputPayload": {
+					"key": "connectorOutputPayload",
+					"value": {
+						"stringValue": "$`Task_2_connectorOutputPayload`$"
+					}
+				},
+				"entityId": {
+					"key": "entityId",
+					"value": {
+						"stringValue": ""
+					}
+				},
+				"entityType": {
+					"key": "entityType",
+					"value": {
+						"stringValue": "genai_transcripts_v1"
+					}
+				},
+				"executeQueryRequestConfig": {
+					"key": "executeQueryRequestConfig",
+					"value": {}
+				},
+				"filterClause": {
+					"key": "filterClause",
+					"value": {
+						"stringValue": "$`Task_2_filterClause`$"
+					}
+				},
+				"listEntitiesNextPageToken": {
+					"key": "listEntitiesNextPageToken",
+					"value": {
+						"stringValue": "$`Task_2_listEntitiesNextPageToken`$"
+					}
+				},
+				"listEntitiesPageSize": {
+					"key": "listEntitiesPageSize",
+					"value": {
+						"stringValue": "$`Task_2_listEntitiesPageSize`$"
+					}
+				},
+				"listEntitiesPageToken": {
+					"key": "listEntitiesPageToken",
+					"value": {
+						"stringValue": "$`Task_2_listEntitiesPageToken`$"
+					}
+				},
+				"listEntitiesSortByColumns": {
+					"key": "listEntitiesSortByColumns",
+					"value": {
+						"stringValue": "$`Task_2_listEntitiesSortByColumns`$"
+					}
+				},
+				"operation": {
+					"key": "operation",
+					"value": {
+						"stringValue": "LIST_ENTITIES"
+					}
+				}
+			},
+			"displayName": "Get All Cases from BQ",
+			"taskExecutionStrategy": "WHEN_ALL_SUCCEED",
+			"externalTaskType": "NORMAL_TASK"
+		},
+		{
+			"task": "GenericConnectorTask",
+			"taskId": "3",
+			"parameters": {
+				"actionName": {
+					"key": "actionName",
+					"value": {
+						"stringValue": ""
+					}
+				},
+				"config": {
+					"key": "config",
+					"value": {}
+				},
+				"connectionName": {
+					"key": "connectionName",
+					"value": {
+						"stringValue": "$`CONFIG_CONNECTION_NAME`$"
+					}
+				},
+				"connectionVersion": {
+					"key": "connectionVersion",
+					"value": {
+						"stringValue": "projects/<PROJECT_ID>/locations/global/providers/gcp/connectors/bigquery/versions/1"
+					}
+				},
+				"connectorInputPayload": {
+					"key": "connectorInputPayload",
+					"value": {
+						"jsonValue": "null"
+					}
+				},
+				"connectorOutputPayload": {
+					"key": "connectorOutputPayload",
+					"value": {
+						"stringValue": "$`Task_3_connectorOutputPayload`$"
+					}
+				},
+				"entityId": {
+					"key": "entityId",
+					"value": {
+						"stringValue": ""
+					}
+				},
+				"entityType": {
+					"key": "entityType",
+					"value": {
+						"stringValue": "genai_transcripts_v1"
+					}
+				},
+				"executeQueryRequestConfig": {
+					"key": "executeQueryRequestConfig",
+					"value": {}
+				},
+				"filterClause": {
+					"key": "filterClause",
+					"value": {
+						"stringValue": "$`Task_3_filterClause`$"
+					}
+				},
+				"listEntitiesNextPageToken": {
+					"key": "listEntitiesNextPageToken",
+					"value": {
+						"stringValue": "$`Task_3_listEntitiesNextPageToken`$"
+					}
+				},
+				"listEntitiesPageSize": {
+					"key": "listEntitiesPageSize",
+					"value": {
+						"stringValue": "$`Task_3_listEntitiesPageSize`$"
+					}
+				},
+				"listEntitiesPageToken": {
+					"key": "listEntitiesPageToken",
+					"value": {
+						"stringValue": "$`Task_3_listEntitiesPageToken`$"
+					}
+				},
+				"listEntitiesSortByColumns": {
+					"key": "listEntitiesSortByColumns",
+					"value": {
+						"stringValue": "$`Task_3_listEntitiesSortByColumns`$"
+					}
+				},
+				"operation": {
+					"key": "operation",
+					"value": {
+						"stringValue": "LIST_ENTITIES"
+					}
+				}
+			},
+			"displayName": "Get Case from BQ",
+			"taskExecutionStrategy": "WHEN_ALL_SUCCEED",
+			"externalTaskType": "NORMAL_TASK"
+		},
+		{
+			"task": "FieldMappingTask",
+			"taskId": "4",
+			"parameters": {
+				"FieldMappingConfigTaskParameterKey": {
+					"key": "FieldMappingConfigTaskParameterKey",
+					"value": {
+						"jsonValue": "{\n  \"@type\": \"type.googleapis.com/enterprise.crm.eventbus.proto.FieldMappingConfig\",\n  \"mappedFields\": [{\n    \"inputField\": {\n      \"fieldType\": \"STRING_VALUE\",\n      \"transformExpression\": {\n        \"initialValue\": {\n          \"literalValue\": {\n            \"stringValue\": \"case_id \\u003d \\u0027\"\n          }\n        },\n        \"transformationFunctions\": [{\n          \"functionType\": {\n            \"stringFunction\": {\n              \"functionName\": \"CONCAT\"\n            }\n          },\n          \"parameters\": [{\n            \"initialValue\": {\n              \"referenceValue\": \"$case_id$\"\n            }\n          }]\n        }, {\n          \"functionType\": {\n            \"stringFunction\": {\n              \"functionName\": \"CONCAT\"\n            }\n          },\n          \"parameters\": [{\n            \"initialValue\": {\n              \"literalValue\": {\n                \"stringValue\": \"\\u0027\"\n              }\n            }\n          }]\n        }]\n      }\n    },\n    \"outputField\": {\n      \"referenceKey\": \"$`Task_3_filterClause`$\",\n      \"fieldType\": \"STRING_VALUE\",\n      \"cardinality\": \"OPTIONAL\"\n    }\n  }]\n}"
+					}
+				}
+			},
+			"displayName": "Get Case Data Mapping",
+			"nextTasks": [
+				{
+					"taskId": "3"
+				}
+			],
+			"taskExecutionStrategy": "WHEN_ALL_SUCCEED",
+			"externalTaskType": "NORMAL_TASK"
+		},
+		{
+			"task": "GenericConnectorTask",
+			"taskId": "5",
+			"parameters": {
+				"actionName": {
+					"key": "actionName",
+					"value": {
+						"stringValue": "ExecuteCustomQuery"
+					}
+				},
+				"config": {
+					"key": "config",
+					"value": {}
+				},
+				"connectionName": {
+					"key": "connectionName",
+					"value": {
+						"stringValue": "$`CONFIG_CONNECTION_NAME`$"
+					}
+				},
+				"connectionVersion": {
+					"key": "connectionVersion",
+					"value": {
+						"stringValue": "projects/<PROJECT_ID>/locations/global/providers/gcp/connectors/bigquery/versions/1"
+					}
+				},
+				"connectorInputPayload": {
+					"key": "connectorInputPayload",
+					"value": {
+						"jsonValue": "null"
+					}
+				},
+				"connectorOutputPayload": {
+					"key": "connectorOutputPayload",
+					"value": {
+						"stringValue": "$`Task_5_connectorOutputPayload`$"
+					}
+				},
+				"entityId": {
+					"key": "entityId",
+					"value": {
+						"stringValue": ""
+					}
+				},
+				"entityType": {
+					"key": "entityType",
+					"value": {
+						"stringValue": ""
+					}
+				},
+				"executeQueryRequestConfig": {
+					"key": "executeQueryRequestConfig",
+					"value": {
+						"jsonValue": "{\n  \"@type\": \"type.googleapis.com/enterprise.crm.eventbus.proto.connectors.ExecuteQueryRequestConfig\",\n  \"query\": {\n    \"literalValue\": {\n      \"stringValue\": \"SELECT action_items \\nFROM `<PROJECT_ID>.cc_genai_insights.genai_transcripts_v1` \\nWHERE case_id\\u003d?\"\n    }\n  },\n  \"deadlineInSeconds\": {\n    \"literalValue\": {\n      \"intValue\": \"180\"\n    }\n  },\n  \"pageSize\": {\n    \"literalValue\": {\n      \"intValue\": \"25\"\n    }\n  },\n  \"queryParameters\": [{\n    \"entries\": [{\n      \"key\": {\n        \"literalValue\": {\n          \"stringValue\": \"dataType\"\n        }\n      },\n      \"value\": {\n        \"literalValue\": {\n          \"stringValue\": \"VARCHAR\"\n        }\n      }\n    }, {\n      \"key\": {\n        \"literalValue\": {\n          \"stringValue\": \"value\"\n        }\n      },\n      \"value\": {\n        \"referenceKey\": \"$case_id$\"\n      }\n    }]\n  }]\n}"
+					}
+				},
+				"filterClause": {
+					"key": "filterClause",
+					"value": {
+						"stringValue": ""
+					}
+				},
+				"listEntitiesPageSize": {
+					"key": "listEntitiesPageSize",
+					"value": {
+						"intValue": "0"
+					}
+				},
+				"listEntitiesPageToken": {
+					"key": "listEntitiesPageToken",
+					"value": {
+						"stringValue": ""
+					}
+				},
+				"listEntitiesSortByColumns": {
+					"key": "listEntitiesSortByColumns",
+					"value": {
+						"stringArray": {}
+					}
+				},
+				"operation": {
+					"key": "operation",
+					"value": {
+						"stringValue": "EXECUTE_QUERY"
+					}
+				}
+			},
+			"displayName": "Get Case Action Items from BQ",
+			"nextTasks": [
+				{
+					"taskId": "7"
+				}
+			],
+			"taskExecutionStrategy": "WHEN_ALL_SUCCEED",
+			"externalTaskType": "NORMAL_TASK"
+		},
+		{
+			"task": "JavaScriptTask",
+			"taskId": "7",
+			"parameters": {
+				"script": {
+					"key": "script",
+					"value": {
+						"stringValue": "\n/**\n * Function that is called during the JavaScript Task execution.\n * @param {IntegrationEvent} event\n */\nfunction executeScript(event) {\n    var respObj = event.getParameter(\"`Task_5_connectorOutputPayload`\");\n\n    // Parse the action_items string into a JavaScript array\n    respObj.forEach(item =\u003e {\n      item.action_items = JSON.parse(item.action_items);\n    });\n\n    event.setParameter(\"response\", respObj);\n}"
+					}
+				}
+			},
+			"displayName": "JavaScript",
+			"taskExecutionStrategy": "WHEN_ALL_SUCCEED",
+			"externalTaskType": "NORMAL_TASK"
+		}
+	],
+	"integrationParameters": [
+		{
+			"key": "case_id",
+			"dataType": "STRING_VALUE",
+			"inputOutputType": "IN"
+		},
+		{
+			"key": "response",
+			"dataType": "JSON_VALUE",
+			"inputOutputType": "OUT"
+		},
+		{
+			"key": "`Task_2_listEntitiesPageSize`",
+			"dataType": "INT_VALUE",
+			"producer": "1_2"
+		},
+		{
+			"key": "`Task_2_listEntitiesPageToken`",
+			"dataType": "STRING_VALUE",
+			"producer": "1_2"
+		},
+		{
+			"key": "`Task_2_listEntitiesSortByColumns`",
+			"dataType": "STRING_ARRAY",
+			"producer": "1_2"
+		},
+		{
+			"key": "`Task_2_filterClause`",
+			"dataType": "STRING_VALUE",
+			"producer": "1_2"
+		},
+		{
+			"key": "`Task_2_listEntitiesNextPageToken`",
+			"dataType": "STRING_VALUE",
+			"isTransient": true,
+			"producer": "1_2"
+		},
+		{
+			"key": "`Task_2_connectorOutputPayload`",
+			"dataType": "JSON_VALUE",
+			"isTransient": true,
+			"inputOutputType": "OUT",
+			"producer": "1_2",
+			"jsonSchema": "{\n  \"type\": [\"array\"],\n  \"items\": {\n    \"$schema\": \"http://json-schema.org/draft-07/schema#\",\n    \"type\": \"object\",\n    \"properties\": {\n      \"sentiment_score\": {\n        \"type\": [\"integer\", \"null\"],\n        \"description\": \"Analyze the overall opinion, feeling, or attitude sentiment expressed and give me score of 1 - 10 where 1 being negative and 10 being positive.\"\n      },\n      \"model_used\": {\n        \"type\": \"string\",\n        \"description\": \"Name of the model used for transcription V1 table used Gemini 1.5 Flash\"\n      },\n      \"timestamp\": {\n        \"type\": \"string\",\n        \"description\": \"Record Processed Timestamp\"\n      },\n      \"audio_uri\": {\n        \"type\": \"string\",\n        \"description\": \"Audio File Storage Location\"\n      },\n      \"sentiment_description\": {\n        \"type\": [\"string\", \"null\"],\n        \"description\": \"Sentiment description based on the Conversation\"\n      },\n      \"transcript_uri\": {\n        \"type\": [\"string\", \"null\"],\n        \"description\": \"Transcript File storage location\"\n      },\n      \"case_id\": {\n        \"type\": \"string\",\n        \"description\": \"Case Id\"\n      },\n      \"transcript_ai_summary\": {\n        \"type\": [\"string\", \"null\"],\n        \"description\": \"AI summary generated based on the transcription\"\n      },\n      \"transcripts\": {\n        \"type\": [\"string\", \"null\"],\n        \"description\": \"Transcripts of the audio file\"\n      },\n      \"language\": {\n        \"type\": \"string\",\n        \"description\": \"Language detected by the model\"\n      },\n      \"action_items\": {\n        \"type\": [\"string\", \"null\"],\n        \"description\": \"Action Items from Phone Conversation\"\n      }\n    }\n  },\n  \"$schema\": \"http://json-schema.org/draft-07/schema#\"\n}"
+		},
+		{
+			"key": "`Task_5_connectorOutputPayload`",
+			"dataType": "JSON_VALUE",
+			"isTransient": true,
+			"producer": "1_5"
+		},
+		{
+			"key": "`Task_3_listEntitiesNextPageToken`",
+			"dataType": "STRING_VALUE",
+			"isTransient": true,
+			"producer": "1_3"
+		},
+		{
+			"key": "`Task_3_connectorOutputPayload`",
+			"dataType": "JSON_VALUE",
+			"isTransient": true,
+			"inputOutputType": "OUT",
+			"producer": "1_3",
+			"jsonSchema": "{\n  \"type\": [\"array\"],\n  \"items\": {\n    \"$schema\": \"http://json-schema.org/draft-07/schema#\",\n    \"type\": \"object\",\n    \"properties\": {\n      \"case_id\": {\n        \"type\": \"string\",\n        \"description\": \"Case Id\"\n      },\n      \"transcript_uri\": {\n        \"type\": [\"string\", \"null\"],\n        \"description\": \"Transcript File storage location\"\n      },\n      \"action_items\": {\n        \"type\": [\"string\", \"null\"],\n        \"description\": \"Action Items from Phone Conversation\"\n      },\n      \"timestamp\": {\n        \"type\": \"string\",\n        \"description\": \"Record Processed Timestamp\"\n      },\n      \"transcript_ai_summary\": {\n        \"type\": [\"string\", \"null\"],\n        \"description\": \"AI summary generated based on the transcription\"\n      },\n      \"model_used\": {\n        \"type\": \"string\",\n        \"description\": \"Name of the model used for transcription V1 table used Gemini 1.5 Flash\"\n      },\n      \"sentiment_score\": {\n        \"type\": [\"integer\", \"null\"],\n        \"description\": \"Analyze the overall opinion, feeling, or attitude sentiment expressed and give me score of 1 - 10 where 1 being negative and 10 being positive.\"\n      },\n      \"sentiment_description\": {\n        \"type\": [\"string\", \"null\"],\n        \"description\": \"Sentiment description based on the Conversation\"\n      },\n      \"audio_uri\": {\n        \"type\": \"string\",\n        \"description\": \"Audio File Storage Location\"\n      },\n      \"transcripts\": {\n        \"type\": [\"string\", \"null\"],\n        \"description\": \"Transcripts of the audio file\"\n      },\n      \"language\": {\n        \"type\": \"string\",\n        \"description\": \"Language detected by the model\"\n      }\n    }\n  },\n  \"$schema\": \"http://json-schema.org/draft-07/schema#\"\n}"
+		}
+	],
+	"integrationConfigParameters": [
+		{
+			"parameter": {
+				"key": "`CONFIG_CONNECTION_NAME`",
+				"dataType": "STRING_VALUE",
+				"defaultValue": {
+					"stringValue": "projects/<PROJECT_ID>/locations/asia-southeast1/connections/bq-connector"
+				},
+				"displayName": "`CONFIG_CONNECTION_NAME`"
+			},
+			"value": {
+				"stringValue": "projects/<PROJECT_ID>/locations/asia-southeast1/connections/bq-connector"
+			}
+		}
+	],
+	"databasePersistencePolicy": "",
+	"cloudLoggingDetails": {
+		"cloudLoggingSeverity": "CLOUD_LOGGING_SEVERITY_UNSPECIFIED",
+		"enableCloudLogging": false
+	}
+}

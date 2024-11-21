@@ -1,0 +1,24 @@
+{
+    "configurations": [
+        {
+            "name": "eval",
+            "policies": [
+                {
+                    "name": "Get-Metadata-Integration-Request.xml",
+                    "tokens": [
+                        {
+                            "xpath": "/SetIntegrationRequest/ProjectId",
+                            "value": "<PROJECT_ID>"
+                        },
+                        {
+                            "xpath": "/SetIntegrationRequest/IntegrationRegion",
+                            "value": "<APP_INT_REGION>"
+                        }
+                    ]
+                }
+            ],
+            "proxies": [],
+            "targets": []
+        }
+    ]
+}

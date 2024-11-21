@@ -1,0 +1,226 @@
+openapi: 3.0.1
+info:
+  title: Transcript API
+  description: API for managing and accessing cases.
+  version: 1.0.0
+servers:
+- url: https://34.49.85.154.nip.io/transcripts/v1
+
+security:
+  - ApiKeyAuth: []
+
+paths:
+  /cases:
+    get:
+      summary: Retrieve All cases
+      responses:
+        "200":
+          description: Successful retrieval of cases
+          content:
+            '*/*':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Transcript'
+        "401":
+          description: Unauthorized
+          content: {}
+    post:
+      summary: Create a new transcript entry
+      requestBody:
+        content:
+          '*/*':
+            schema:
+              $ref: '#/components/schemas/Transcript'
+        required: true
+      responses:
+        "201":
+          description: Transcript created successfully.
+          content: {}
+        "400":
+          description: Invalid input data.
+          content: {}
+        "401":
+          description: Unauthorized.
+          content: {}
+      x-codegen-request-body-name: transcript
+  /cases/{case_id}:
+    get:
+      summary: Retrieve a specific transcript
+      parameters:
+      - name: case_id
+        in: path
+        description: Unique identifier of the transcript
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: Successful retrieval of the transcript
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/Transcript'
+        "401":
+          description: Unauthorized
+          content: {}
+        "404":
+          description: Transcript not found
+          content: {}
+    put:
+      summary: Update a transcript
+      parameters:
+      - name: case_id
+        in: path
+        description: Unique identifier of the transcript
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          '*/*':
+            schema:
+              $ref: '#/components/schemas/Transcript'
+        required: true
+      responses:
+        "200":
+          description: Transcript updated successfully
+          content: {}
+        "400":
+          description: Invalid input data
+          content: {}
+        "401":
+          description: Unauthorized
+          content: {}
+        "404":
+          description: Transcript not found
+          content: {}
+      x-codegen-request-body-name: transcript
+    delete:
+      summary: Delete a transcript
+      parameters:
+      - name: case_id
+        in: path
+        description: Unique identifier of the transcript
+        required: true
+        schema:
+          type: string
+      responses:
+        "204":
+          description: Transcript deleted successfully
+          content: {}
+        "401":
+          description: Unauthorized
+          content: {}
+        "404":
+          description: Transcript not found
+          content: {}
+  /cases/{case_id}/action_items:
+    get:
+      summary: Retrieve action items for a specific transcript
+      parameters:
+      - name: case_id
+        in: path
+        description: Unique identifier of the transcript
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: Successful retrieval of action items
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  action_items:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/ActionItem'
+        "401":
+          description: Unauthorized
+          content: {}
+        "404":
+          description: Transcript not found
+          content: {}
+
+components:
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: Authorization
+  schemas:
+    Transcript:
+      type: object
+      properties:
+        case_id:
+          type: string
+          description: Unique identifier for the case.
+          example: CASE-12345
+        timestamp:
+          type: string
+          description: Timestamp of the transcript creation.
+          format: date-time
+          example: 2024-06-24T09:30:00Z
+        model_used:
+          type: string
+          description: Name or version of the model used for transcription.
+          example: Whisper-v2
+        language:
+          type: string
+          description: Language of the audio/transcript.
+          example: en-US
+        audio_uri:
+          type: string
+          description: URI pointing to the audio file.
+          format: uri
+          example: https://storage.example.com/audio/call_recording.mp3
+        transcript_uri:
+          type: string
+          description: URI pointing to the full transcript file (if applicable).
+          format: uri
+          nullable: true
+          example: https://storage.example.com/cases/call_recording.txt
+        cases:
+          type: string
+          description: Full text of the transcript.
+          nullable: true
+          example: Welcome to the customer service line...
+        transcript_ai_summary:
+          type: string
+          description: AI-generated summary of the transcript.
+          nullable: true
+          example: Customer called to inquire about their order status.
+        sentiment_score:
+          type: integer
+          description: "Overall sentiment score (e.g., -100 to 100)."
+          nullable: true
+          example: 75
+        sentiment_description:
+          type: string
+          description: "Description of the sentiment (e.g., \"positive\", \"negative\"\
+            )."
+          nullable: true
+          example: positive
+        action_items:
+          type: string
+          description: Extracted action items from the transcript.
+          nullable: true
+          example: "Follow up with customer regarding order #5678."
+
+    ActionItem:
+      type: object
+      properties:
+        owner:
+          type: string
+          description: Who is responsible for the action item.
+          example: Agent
+        status:
+          type: string
+          description: Status of the action item (e.g., Done, Not Done, In Progress).
+          example: Done
+        action_item:
+          type: string
+          description: Description of the action to be taken.
+          example: Explained voucher program to the customer and eligibility for new customers.

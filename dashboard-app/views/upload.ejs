@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Customer Service Insights - Upload File</title>
+  <link rel="stylesheet" href="/styles.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.1.0/css/all.css" integrity="sha512-ajhUYg8JAATDFejqbeN7KbF2zyPbbqz04dgOLyGcYEk/MJD3V+HJhJLKvJ2VVlqrr4PwHeGTTWxbI+8teA7snw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="icon" type="image/x-icon" href="/c-purple-icon.png">
+</head>
+<body class="user-authenticated">
+  <div id="banner">
+    <img class="banner-logo" src="/logos/customer-logo.png" alt="Your logo">
+    <div id=banner-text>
+      <span>Customer Service Insights Portal</span>
+    </div>
+  </div>
+  <div id="upload-form">
+    <form action="/upload" method="POST" enctype="multipart/form-data">
+      <h1>Upload File</h1>
+      <label for="file">File:</label>
+      <input type="file" name="audio" id="file">
+
+      <label for="case-id">Case ID:</label>
+      <input type="text" name="case-id" id="case-id" pattern="[0-9]+" required>
+      <button type="submit">Upload</button>
+      
+        <% if (statusMessage) { %>
+          <div class="alert success">
+          <i class="fas fa-check-circle"></i>
+          <p><%= statusMessage %></p>
+          <span class="close-btn" onclick="this.parentElement.style.display='none';">&times;</span>
+          </div>
+        <% } %>          
+      
+    </form>
+  </div>
+  <div id="search-form">
+    <form action="/search" method="GET">
+      <h1>Search</h1>
+      <label for="case-id">Case ID:</label>
+      <input type="text" name="case-id" id="case-id" pattern="[0-9]+" required>
+      <button type="submit">Search</button>
+    </form>
+    <div id="search-results">
+      <table>
+        <thead>
+          <tr>
+            <th class="case-cell">Case ID</th>
+            <th class="timestamp-cell">Timestamp</th>
+            <th class="status-cell">Status</th>
+            <th class="ai-insights-cell">AI Insights</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% for (let result of searchResults) { %>
+            <tr>
+              <td class="case-cell"><%= result.caseId %></td>
+              <td class="timestamp-cell"><%= result.timestamp %></td>
+              <td class="status-cell">
+                <div class="status-icon-container">
+                  <% if (result.processingStatus == 'processing') { %>
+                    <div class="status-icon processing" alt="Processing"></div>
+                  <% } %>
+                  <% if (result.processingStatus == 'transcript_generated') { %>
+                    <div class="status-icon transcript-generated" alt="Insights Available"></div>
+                  <% } %>
+                </div>
+              </td>
+              <td class="ai-insights-cell">
+                <% if (result.processingStatus == 'transcript_generated') { %>
+                  <a class="ai-insights-link" title="View AI Insights" href="ai-insights/<%= result.aiInsights %>"><img src="/insights2.gif" class="insights-gif" alt="Insights"></a>
+                <% } %>
+              </td>
+            </tr>
+          <% } %>
+        </tbody>
+      </table>
+    </div>  
+  </div>
+  <div class="audio-player-wrapper">
+    <h1>Audio & Raw Transcript</h1>
+    <div id="audio-player-placeholder">
+      <img id="loading-logo" src="/loading1.gif" alt="Loading...">
+      <img id="loading-animation" src="/loading2.gif" alt="Loading...">
+    </div>
+  </div>
+  <div class="ai-insights">
+    <h1>Gemini AI Summary</h1>
+    <img id="ai-loading-logo" src="/loading1.gif" alt="Loading...">
+    <div id="ai-loading-lines">
+      <div class="animated-line-inner">
+        <span></span>
+      </div>
+      <div class="animated-line-inner2">
+        <span></span>
+      </div>
+      <div class="animated-line-inner3">
+        <span></span>
+      </div>
+    </div>
+    <div id="ai-insights-placeholder" class="typing-container">
+    </div>
+  </div>
+  <div class="ai-insights-action-items">
+    <h1>Gemini AI Action Items</h1>
+    <img id="ai-action-loading-logo" src="/loading1.gif" alt="Loading...">
+    <div id="ai-loading-lines2">
+      <div class="animated-line-inner">
+        <span></span>
+      </div>
+      <div class="animated-line-inner2">
+        <span></span>
+      </div>
+      <div class="animated-line-inner3">
+        <span></span>
+      </div>
+    </div>
+    <div id="ai-insights-action-itemsplaceholder">
+    </div>
+  </div>
+  <script src="/audio-player.js"></script>
+</body>
+</html>

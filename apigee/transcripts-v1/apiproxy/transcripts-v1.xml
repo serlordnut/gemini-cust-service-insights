@@ -1,0 +1,26 @@
+<APIProxy revision="21" name="transcripts-v1">
+    <DisplayName></DisplayName>
+    <Description>API for managing and accessing transcripts.</Description>
+    <CreatedAt>1719327843589</CreatedAt>
+    <LastModifiedAt>1719327843589</LastModifiedAt>
+    <BasePaths>/transcripts/v1</BasePaths>
+    <Policies>
+        <Policy>verify-api-key</Policy>
+        <Policy>impose-quota</Policy>
+        <Policy>add-cors</Policy>
+        <Policy>Get-All-Cases-SIR</Policy>
+        <Policy>remove-authorization</Policy>
+        <Policy>Get-Case-Integration-Request</Policy>
+        <Policy>Integration-Callout</Policy>
+        <Policy>Extract-Get-All-Cases-Response</Policy>
+        <Policy>Extract-Get-Case-Response</Policy>
+        <Policy>Extract-Get-Case-CaseId</Policy>
+        <Policy>Get-Case_ActionItems-Integration-Request</Policy>
+        <Policy>Extract-Get-Case-Action-Items-Response</Policy>
+        <Policy>Assign-Message-Final-Response</Policy>
+        <Policy>Extract-Get-Case-Action-items-CaseId</Policy>
+    </Policies>
+    <ProxyEndpoints>
+        <ProxyEndpoint>default</ProxyEndpoint>
+    </ProxyEndpoints>
+</APIProxy>

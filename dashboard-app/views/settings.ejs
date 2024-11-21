@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Customer Service Insights - Site Settings</title>
+  <link rel="stylesheet" href="/styles.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.1.0/css/all.css" integrity="sha512-ajhUYg8JAATDFejqbeN7KbF2zyPbbqz04dgOLyGcYEk/MJD3V+HJhJLKvJ2VVlqrr4PwHeGTTWxbI+8teA7snw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="icon" type="image/x-icon" href="/c-purple-icon.png">
+</head>
+<body class="user-authenticated">
+  <div id="banner">
+    <img class="banner-logo" src="/logos/customer-logo.png" alt="Your logo">
+    <div id=banner-text>
+      <span>Customer Service Insights Portal</span>
+    </div>
+  </div>
+  <div id="settings-form">
+  <form action="/config" method="POST">
+    <label for="clientID">Client ID:</label>
+    <input type="text" id="clientID" name="clientID" value="<%= config.clientID %>" />
+    <br />
+    <label for="clientSecret">Client Secret:</label>
+    <input type="text" id="clientSecret" name="clientSecret" value="<%= config.clientSecret %>" />
+    <br />
+    <label for="callbackURL">Callback URL:</label>
+    <input type="text" id="callbackURL" name="callbackURL" value="<%= config.callbackURL %>" />
+    <br />
+    <label for="allowedDomains">Allowed Domains (comma-separated):</label>
+    <input type="text" id="allowedDomains" name="allowedDomains" value="<%= config.allowedDomains %>" />
+    <br />
+    <label for="projectId">Project ID:</label>
+    <input type="text" id="projectId" name="projectId" value="<%= config.projectId %>" />
+    <br />
+    <label for="prompt_summary">Prompt For Summary:</label>
+    <input type="text" id="prompt_summary" name="prompt_summary" value="<%= config.prompt_summary %>" />
+    <br />
+    <label for="prompt_action_items">Prompt For Action Items:</label>
+    <input type="text" id="prompt_action_items" name="prompt_action_items" value="<%= config.prompt_action_items %>" />
+    <br />
+    <input type="submit" value="Save" />
+  </form>
+  </div>
+</body>
+</html>

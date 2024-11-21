@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<ExtractVariables continueOnError="false" enabled="true" name="Extract-Get-Case-Response">
+    <DisplayName>Extract Get Case Response</DisplayName>
+    <IgnoreUnresolvedVariables>true</IgnoreUnresolvedVariables>
+    <JSONPayload>
+        <Variable name="finalResponse">
+            <JSONPath>$.outputParameters.`Task_3_connectorOutputPayload`</JSONPath>
+        </Variable>
+    </JSONPayload>
+    <Source clearPayload="false">flow.icResponse</Source>
+    <VariablePrefix>flow</VariablePrefix>
+</ExtractVariables>

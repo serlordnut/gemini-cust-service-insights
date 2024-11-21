@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<ExtractVariables continueOnError="false" enabled="true" name="Extract-Get-Case-Action-Items-Response">
+    <DisplayName>Extract Get Case Action Items Response</DisplayName>
+    <JSONPayload>
+        <Variable name="finalResponse">
+            <JSONPath>$.outputParameters.response[0]</JSONPath>
+        </Variable>
+    </JSONPayload>
+    <Source clearPayload="false">flow.icResponse</Source>
+    <VariablePrefix>flow</VariablePrefix>
+</ExtractVariables>

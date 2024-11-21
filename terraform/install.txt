@@ -1,0 +1,33 @@
+/*** Terraform commands
+
+0. Remove existing terraform state files & rerun terraform insights
+
+cd gen-ai-cc-insights-terraform/ && rm -rf terraform.tfstate* && rm -rf .terraform* && terraform init
+
+1. Update variables.tfvars parameters with project_id
+
+2. terraform apply -var-file="variables.tfvars"
+
+3. constraints/cloudfunctions.allowedIngressSettings Allow All
+
+3.a constraints/iam.allowedPolicyMemberDomains Allow All
+
+4. Deploy cloud function using below commands
+
+pro_id=$(cat variables.tfvars | sed -n 's/^project_name\s*=\s*"\(.*\)".*$/\1/p') && cd ../cloud_functions/gemini_generate_customer_insights && gcloud functions deploy gemini_generate_customer_insights --runtime python39 --trigger-resource $pro_id-operation-insights-audio-files --trigger-event google.cloud.storage.object.v1.finalized --region asia-southeast1 --project $pro_id --entry-point gemini_generate_customer_insights --min-instances 1 --max-instances 10 --gen2 --memory 512MiB --service-account=gcf-sa@$pro_id.iam.gserviceaccount.com
+
+Deploy Cloud run
+
+6. gcloud run deploy
+
+8. Configure consent screen
+
+9. Generate oAuth Client Credentials
+
+10. Update Config.js with details
+
+11. Upload logo and banner of customer into public/logos/
+
+12. Update html_files/login.html, views/upload.ejs with logo and banner links
+
+***/

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<SetIntegrationRequest continueOnError="false" enabled="true" name="Get-All-Cases-SIR">
+    <DisplayName>Get All Cases Integration Request</DisplayName>
+    <ProjectId>replaced_by_config</ProjectId>
+    <IntegrationName>BigQueryIntegration</IntegrationName>
+    <IntegrationRegion>replaced_by_config</IntegrationRegion>
+    <ApiTrigger>api_trigger/BigQueryIntegration_getAllCases</ApiTrigger>
+    <Request>flow.icRequest</Request>
+</SetIntegrationRequest>

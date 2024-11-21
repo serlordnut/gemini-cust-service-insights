@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<ExtractVariables continueOnError="false" enabled="true" name="Extract-Get-Case-CaseId">
+    <DisplayName>Extract Get Case CaseId</DisplayName>
+    <Properties/>
+    <URIPath>
+        <Pattern ignoreCase="true">/cases/{caseId}</Pattern>
+    </URIPath>
+    <VariablePrefix>flow</VariablePrefix>
+</ExtractVariables>

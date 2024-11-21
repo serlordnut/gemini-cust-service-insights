@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<IntegrationCallout continueOnError="false" enabled="true" name="Integration-Callout">
+    <DisplayName>Integration Callout</DisplayName>
+    <AsyncExecution>false</AsyncExecution>
+    <Request clearPayload="true">flow.icRequest</Request>
+    <Response>flow.icResponse</Response>
+</IntegrationCallout>

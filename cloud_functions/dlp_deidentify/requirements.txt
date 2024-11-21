@@ -1,0 +1,8 @@
+functions-framework==3.*
+google-cloud-dlp
+google-cloud-pubsub
+google-cloud-storage
+google-cloud-logging
+google-cloud
+google-api-core>=2.10.0
+urllib3==1.26.12

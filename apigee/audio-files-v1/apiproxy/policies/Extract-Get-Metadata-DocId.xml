@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<ExtractVariables continueOnError="false" enabled="true" name="Extract-Get-Metadata-DocId">
+    <DisplayName>Extract Get Metadata DocId</DisplayName>
+    <Properties/>
+    <URIPath>
+        <Pattern ignoreCase="true">/metadata/{docId}</Pattern>
+    </URIPath>
+    <VariablePrefix>flow</VariablePrefix>
+</ExtractVariables>

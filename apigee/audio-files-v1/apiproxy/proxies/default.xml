@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<ProxyEndpoint name="default">
+    <FaultRules>
+        <FaultRule name="invalid_key_rule">
+            <Step>
+                <Name>invalid-key-message</Name>
+            </Step>
+            <Condition>(fault.name Matches "InvalidApiKey")</Condition>
+        </FaultRule>
+    </FaultRules>
+    <DefaultFaultRule name="default-fault">
+        <AlwaysEnforce>true</AlwaysEnforce>
+        <Step>
+            <Name>add-cors</Name>
+        </Step>
+        <Step>
+            <Name>Default-Message</Name>
+        </Step>
+    </DefaultFaultRule>
+    <PreFlow name="PreFlow">
+        <Request>
+            <Step>
+                <Name>verify-api-key</Name>
+                <Condition>request.verb != "OPTIONS"</Condition>
+            </Step>
+            <Step>
+                <Name>remove-authorization</Name>
+                <Condition>request.verb != "OPTIONS"</Condition>
+            </Step>
+            <Step>
+                <Name>impose-quota</Name>
+                <Condition>request.verb != "OPTIONS"</Condition>
+            </Step>
+        </Request>
+        <Response/>
+    </PreFlow>
+    <Flows>
+        <Flow name="OptionsPreFlight">
+            <Request>
+                <Step>
+                    <Name>add-cors</Name>
+                </Step>
+            </Request>
+            <Response/>
+            <Condition>request.verb == "OPTIONS" AND request.header.origin != null AND request.header.Access-Control-Request-Method != null</Condition>
+        </Flow>
+        <Flow name="get /metadata/{doc_id}">
+            <Description>Retrieve a specific DocData</Description>
+            <Request>
+                <Step>
+                    <Name>Extract-Get-Metadata-DocId</Name>
+                </Step>
+                <Step>
+                    <Name>Get-Metadata-Integration-Request</Name>
+                </Step>
+                <Step>
+                    <Name>Integration-Callout</Name>
+                </Step>
+                <Step>
+                    <Name>Extract-Get-Metadata-Response</Name>
+                </Step>
+            </Request>
+            <Response>
+                <Step>
+                    <Name>Assign-Message-Final-Response</Name>
+                </Step>
+            </Response>
+            <Condition>(proxy.pathsuffix MatchesPath "/metadata/*") and (request.verb = "GET")</Condition>
+        </Flow>
+    </Flows>
+    <PostFlow name="PostFlow">
+        <Request>
+            <Step>
+                <Name>add-cors</Name>
+            </Step>
+        </Request>
+        <Response/>
+    </PostFlow>
+    <HTTPProxyConnection>
+        <BasePath>/audio-files/v1</BasePath>
+    </HTTPProxyConnection>
+    <RouteRule name="NoRoute"/>
+</ProxyEndpoint>

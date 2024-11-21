@@ -1,0 +1,55 @@
+{
+    "version": "1.0",
+    "envConfig": {
+        "eval": {
+            "targetServers": [],
+            "kvms": [],
+            "references": [],
+            "resourcefiles": [],
+            "keystores": [],
+            "aliases": [],
+            "flowhooks": []
+        }
+    },
+    "orgConfig": {
+        "apiProducts": [
+            {
+                "name": "Audio-Files-ReadOnly",
+                "displayName": "Audio-Files-ReadOnly",
+                "approvalType": "auto",
+                "attributes": [
+                    {
+                        "name": "access",
+                        "value": "public"
+                    }
+                ],
+                "environments": [
+                    "eval"
+                ],
+                "quota": "10",
+                "quotaInterval": "1",
+                "quotaTimeUnit": "minute",
+                "operationGroup": {
+                    "operationConfigs": [
+                        {
+                            "apiSource": "audio-files-v1",
+                            "operations": [
+                                {
+                                    "resource": "/metadata/*",
+                                    "methods": [
+                                        "GET"
+                                    ]
+                                }
+                            ],
+                            "quota": {}
+                        }
+                    ],
+                    "operationConfigType": "proxy"
+                }
+            }
+        ],
+        "kvms": [],
+        "reports": [],
+        "developers": []
+    }
+}

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<AssignMessage continueOnError="false" enabled="true" name="Default-Message">
+    <DisplayName>Default Message</DisplayName>
+    <AssignVariable>
+        <Name>flow.statusCode</Name>
+        <Ref>flow.statusCode</Ref>
+        <Value>500</Value>
+    </AssignVariable>
+    <AssignVariable>
+        <Name>flow.reasonPhrase</Name>
+        <Ref>flow.reasonPhrase</Ref>
+        <Value>Internal Server Error</Value>
+    </AssignVariable>
+    <AssignVariable>
+        <Name>flow.error</Name>
+        <Ref>flow.error</Ref>
+        <Value>Internal Server Error</Value>
+    </AssignVariable>
+    <Set>
+        <Payload contentType="application/json">{"error":{flow.error}}</Payload>
+        <StatusCode>{flow.statusCode}</StatusCode>
+        <ReasonPhrase>{flow.reasonPhrase}</ReasonPhrase>
+    </Set>
+    <IgnoreUnresolvedVariables>true</IgnoreUnresolvedVariables>
+    <AssignTo createNew="false" transport="http" type="response"/>
+</AssignMessage>

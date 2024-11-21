@@ -1,0 +1,98 @@
+{
+    "version": "1.0",
+    "envConfig": {
+        "eval": {
+            "targetServers": [],
+            "kvms": [],
+            "references": [],
+            "resourcefiles": [],
+            "keystores": [],
+            "aliases": [],
+            "flowhooks": []
+        }
+    },
+    "orgConfig": {
+        "apiProducts": [
+            {
+                "name": "Transcripts-ReadOnly",
+                "displayName": "Transcripts-ReadOnly",
+                "approvalType": "auto",
+                "attributes": [
+                    {
+                        "name": "access",
+                        "value": "public"
+                    }
+                ],
+                "environments": [
+                    "eval"
+                ],
+                "quota": "10",
+                "quotaInterval": "1",
+                "quotaTimeUnit": "minute",
+                "operationGroup": {
+                    "operationConfigs": [
+                        {
+                            "apiSource": "transcripts-v1",
+                            "operations": [
+                                {
+                                    "resource": "/cases",
+                                    "methods": [
+                                        "GET"
+                                    ]
+                                }
+                            ],
+                            "quota": {}
+                        },
+                        {
+                            "apiSource": "transcripts-v1",
+                            "operations": [
+                                {
+                                    "resource": "/cases/*",
+                                    "methods": [
+                                        "GET"
+                                    ]
+                                }
+                            ],
+                            "quota": {}
+                        },
+                        {
+                            "apiSource": "transcripts-v1",
+                            "operations": [
+                                {
+                                    "resource": "/cases/*/action_items",
+                                    "methods": [
+                                        "GET"
+                                    ]
+                                }
+                            ],
+                            "quota": {}
+                        }
+                    ],
+                    "operationConfigType": "proxy"
+                }
+            }
+        ],
+        "kvms": [],
+        "reports": [],
+        "developers": [
+            {
+                "email": "john@example.com",
+                "firstName": "John",
+                "lastName": "Example",
+                "userName": "johnexample",
+                "attributes": []
+            }
+        ],
+        "developerApps": {
+            "john@example.com": [
+                {
+                    "name": "Transcripts Read App",
+                    "apiProducts": [
+                        "Transcripts-ReadOnly"
+                    ],
+                    "scopes": []
+                }
+            ]
+        }
+    }
+}

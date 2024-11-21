@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<SetIntegrationRequest continueOnError="false" enabled="true" name="Get-Metadata-Integration-Request">
+    <DisplayName>Get Metadata Integration Request</DisplayName>
+    <ProjectId>replaced_by_config</ProjectId>
+    <IntegrationName>FirestoreIntegration</IntegrationName>
+    <IntegrationRegion>replaced_by_config</IntegrationRegion>
+    <ApiTrigger>api_trigger/FirestoreIntegration_GetDocumentAPI</ApiTrigger>
+    <Parameters>
+        <Parameter name="document_id" type="string" ref="flow.docId"/>
+    </Parameters>
+    <Request>flow.icRequest</Request>
+</SetIntegrationRequest>

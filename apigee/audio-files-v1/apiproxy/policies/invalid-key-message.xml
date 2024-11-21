@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<AssignMessage async="false" continueOnError="false" enabled="true" name="invalid-key-message">
+    <DisplayName>Invalid key message</DisplayName>
+    <AssignVariable>
+        <Name>flow.statusCode</Name>
+        <Value>401</Value>
+    </AssignVariable>
+    <AssignVariable>
+        <Name>flow.reasonPhrase</Name>
+        <Value>Unauthorized</Value>
+    </AssignVariable>
+    <AssignVariable>
+        <Name>flow.error</Name>
+        <Value>Invaild Authorization Header</Value>
+    </AssignVariable>
+    <IgnoreUnresolvedVariables>true</IgnoreUnresolvedVariables>
+</AssignMessage>

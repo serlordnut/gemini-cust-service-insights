@@ -1,0 +1,168 @@
+{
+	"description": "API to connect and fetch data from Firestore",
+	"snapshotNumber": "2",
+	"triggerConfigs": [
+		{
+			"label": "Get Document API",
+			"triggerType": "API",
+			"triggerNumber": "1",
+			"triggerId": "api_trigger/FirestoreIntegration_GetDocumentAPI",
+			"startTasks": [
+				{
+					"taskId": "2"
+				}
+			],
+			"properties": {
+				"Trigger name": "FirestoreIntegration_GetDocumentAPI"
+			}
+		}
+	],
+	"taskConfigs": [
+		{
+			"task": "Firestore - Document Get",
+			"taskId": "1",
+			"parameters": {
+				"authConfig": {
+					"key": "authConfig",
+					"value": {
+						"jsonValue": "{\n  \"@type\": \"type.googleapis.com/enterprise.crm.eventbus.authconfig.AuthConfigTaskParam\"\n}"
+					}
+				},
+				"authConfigName": {
+					"key": "authConfigName",
+					"value": {
+						"stringValue": "Firestore Auth Profile"
+					}
+				},
+				"databasesId": {
+					"key": "databasesId",
+					"value": {
+						"stringValue": "$`CONFIG_DATABASE_ID`$"
+					}
+				},
+				"documentsId": {
+					"key": "documentsId",
+					"value": {
+						"stringValue": "$document_path$"
+					}
+				},
+				"mask_fieldPaths": {
+					"key": "mask_fieldPaths",
+					"value": {
+						"stringValue": ""
+					}
+				},
+				"projectsId": {
+					"key": "projectsId",
+					"value": {
+						"stringValue": "$`CONFIG_PROJECT_ID`$"
+					}
+				},
+				"readTime": {
+					"key": "readTime",
+					"value": {
+						"stringValue": ""
+					}
+				},
+				"response": {
+					"key": "response",
+					"value": {
+						"stringArray": {
+							"stringValues": [
+								"$`Task_1_response`$"
+							]
+						}
+					}
+				},
+				"taskTemplateId": {
+					"key": "taskTemplateId",
+					"value": {
+						"stringValue": "31694c4c-11b7-4ba7-8fdc-fc4c97bf564a"
+					}
+				},
+				"transaction": {
+					"key": "transaction",
+					"value": {
+						"stringValue": ""
+					}
+				}
+			},
+			"displayName": "Firestore - Document Get (Preview)",
+			"taskExecutionStrategy": "WHEN_ALL_SUCCEED",
+			"taskTemplate": "Firestore - Document Get",
+			"externalTaskType": "NORMAL_TASK"
+		},
+		{
+			"task": "FieldMappingTask",
+			"taskId": "2",
+			"parameters": {
+				"FieldMappingConfigTaskParameterKey": {
+					"key": "FieldMappingConfigTaskParameterKey",
+					"value": {
+						"jsonValue": "{\n  \"@type\": \"type.googleapis.com/enterprise.crm.eventbus.proto.FieldMappingConfig\",\n  \"mappedFields\": [{\n    \"inputField\": {\n      \"fieldType\": \"STRING_VALUE\",\n      \"transformExpression\": {\n        \"initialValue\": {\n          \"literalValue\": {\n            \"stringValue\": \"audio-files-metadata/\"\n          }\n        },\n        \"transformationFunctions\": [{\n          \"functionType\": {\n            \"stringFunction\": {\n              \"functionName\": \"CONCAT\"\n            }\n          },\n          \"parameters\": [{\n            \"initialValue\": {\n              \"referenceValue\": \"$document_id$\"\n            }\n          }]\n        }]\n      }\n    },\n    \"outputField\": {\n      \"referenceKey\": \"$document_path$\",\n      \"fieldType\": \"STRING_VALUE\",\n      \"cardinality\": \"OPTIONAL\"\n    }\n  }]\n}"
+					}
+				}
+			},
+			"displayName": "Data Mapping",
+			"nextTasks": [
+				{
+					"taskId": "1"
+				}
+			],
+			"taskExecutionStrategy": "WHEN_ALL_SUCCEED",
+			"externalTaskType": "NORMAL_TASK"
+		}
+	],
+	"integrationParameters": [
+		{
+			"key": "`Task_1_response`",
+			"dataType": "JSON_VALUE",
+			"isTransient": true,
+			"inputOutputType": "OUT",
+			"producer": "1_1",
+			"jsonSchema": "{\n  \"$schema\": \"http://json-schema.org/draft-07/schema#\",\n  \"type\": \"object\",\n  \"properties\": {\n    \"name\": {\n      \"description\": \"The resource name of the document, for example `projects/{project_id}/databases/{database_id}/documents/{document_path}`.\",\n      \"type\": \"string\"\n    },\n    \"updateTime\": {\n      \"type\": \"string\",\n      \"format\": \"google-datetime\",\n      \"description\": \"Output only. The time at which the document was last changed. This value is initially set to the `create_time` then increases monotonically with each change to the document. It can also be compared to values from other documents and the `read_time` of a query.\"\n    },\n    \"createTime\": {\n      \"format\": \"google-datetime\",\n      \"description\": \"Output only. The time at which the document was created. This value increases monotonically when a document is deleted then recreated. It can also be compared to values from other documents and the `read_time` of a query.\",\n      \"type\": \"string\"\n    },\n    \"fields\": {\n      \"description\": \"The document\\u0027s fields. The map keys represent field names. A simple field name contains only characters `a` to `z`, `A` to `Z`, `0` to `9`, or `_`, and must not start with `0` to `9`. For example, `foo_bar_17`. Field names matching the regular expression `__.*__` are reserved. Reserved field names are forbidden except in certain documented contexts. The map keys, represented as UTF-8, must not exceed 1,500 bytes and cannot be empty. Field paths may be used in other contexts to refer to structured fields defined here. For `map_value`, the field path is represented by the simple or quoted field names of the containing fields, delimited by `.`. For example, the structured field `\\\"foo\\\" : { map_value: { \\\"x\\u0026y\\\" : { string_value: \\\"hello\\\" }}}` would be represented by the field path `foo.x\\u0026y`. Within a field path, a quoted field name starts and ends with `` ` `` and may contain any character. Some characters, including `` ` ``, must be escaped using a `\\\\`. For example, `` `x\\u0026y` `` represents `x\\u0026y` and `` `bak\\\\`tik` `` represents `` bak`tik ``.\",\n      \"additionalProperties\": {\n        \"description\": \"A message that can hold any of the supported value types.\",\n        \"properties\": {\n          \"bytesValue\": {\n            \"description\": \"A bytes value. Must not exceed 1 MiB - 89 bytes. Only the first 1,500 bytes are considered by queries.\",\n            \"format\": \"byte\",\n            \"type\": \"string\"\n          },\n          \"geoPointValue\": {\n            \"properties\": {\n            },\n            \"description\": \"An object that represents a latitude/longitude pair. This is expressed as a pair of doubles to represent degrees latitude and degrees longitude. Unless specified otherwise, this object must conform to the WGS84 standard. Values must be within normalized ranges.\",\n            \"type\": \"object\"\n          },\n          \"doubleValue\": {\n            \"description\": \"A double value.\",\n            \"type\": \"number\",\n            \"format\": \"double\"\n          },\n          \"arrayValue\": {\n            \"properties\": {\n              \"values\": {\n                \"description\": \"Values in the array.\",\n                \"items\": {\n                  \"description\": \"A message that can hold any of the supported value types.\",\n                  \"properties\": {\n                    \"bytesValue\": {\n                      \"description\": \"A bytes value. Must not exceed 1 MiB - 89 bytes. Only the first 1,500 bytes are considered by queries.\",\n                      \"format\": \"byte\",\n                      \"type\": \"string\"\n                    },\n                    \"geoPointValue\": {\n                      \"properties\": {\n                      },\n                      \"description\": \"An object that represents a latitude/longitude pair. This is expressed as a pair of doubles to represent degrees latitude and degrees longitude. Unless specified otherwise, this object must conform to the WGS84 standard. Values must be within normalized ranges.\",\n                      \"type\": \"object\"\n                    },\n                    \"doubleValue\": {\n                      \"description\": \"A double value.\",\n                      \"type\": \"number\",\n                      \"format\": \"double\"\n                    },\n                    \"arrayValue\": {\n                      \"properties\": {\n                        \"values\": {\n                          \"description\": \"Values in the array.\",\n                          \"items\": {\n                            \"description\": \"A message that can hold any of the supported value types.\",\n                            \"properties\": {\n                              \"bytesValue\": {\n                                \"description\": \"A bytes value. Must not exceed 1 MiB - 89 bytes. Only the first 1,500 bytes are considered by queries.\",\n                                \"format\": \"byte\",\n                                \"type\": \"string\"\n                              },\n                              \"geoPointValue\": {\n                                \"properties\": {\n                                },\n                                \"description\": \"An object that represents a latitude/longitude pair. This is expressed as a pair of doubles to represent degrees latitude and degrees longitude. Unless specified otherwise, this object must conform to the WGS84 standard. Values must be within normalized ranges.\",\n                                \"type\": \"object\"\n                              },\n                              \"doubleValue\": {\n                                \"description\": \"A double value.\",\n                                \"type\": \"number\",\n                                \"format\": \"double\"\n                              },\n                              \"arrayValue\": {\n                                \"properties\": {\n                                  \"values\": {\n                                    \"description\": \"Values in the array.\",\n                                    \"items\": {\n                                      \"description\": \"A message that can hold any of the supported value types.\",\n                                      \"properties\": {\n                                        \"bytesValue\": {\n                                          \"description\": \"A bytes value. Must not exceed 1 MiB - 89 bytes. Only the first 1,500 bytes are considered by queries.\",\n                                          \"format\": \"byte\",\n                                          \"type\": \"string\"\n                                        },\n                                        \"geoPointValue\": {\n                                          \"properties\": {\n                                          },\n                                          \"description\": \"An object that represents a latitude/longitude pair. This is expressed as a pair of doubles to represent degrees latitude and degrees longitude. Unless specified otherwise, this object must conform to the WGS84 standard. Values must be within normalized ranges.\",\n                                          \"type\": \"object\"\n                                        },\n                                        \"doubleValue\": {\n                                          \"description\": \"A double value.\",\n                                          \"type\": \"number\",\n                                          \"format\": \"double\"\n                                        },\n                                        \"arrayValue\": {\n                                          \"properties\": {\n                                          },\n                                          \"type\": \"object\",\n                                          \"description\": \"An array value.\"\n                                        },\n                                        \"nullValue\": {\n                                          \"enumDescriptions\": [\"Null value.\"],\n                                          \"enum\": [\"NULL_VALUE\"],\n                                          \"type\": \"string\",\n                                          \"description\": \"A null value.\"\n                                        },\n                                        \"mapValue\": {\n                                          \"description\": \"A map value.\",\n                                          \"type\": \"object\",\n                                          \"properties\": {\n                                          }\n                                        },\n                                        \"booleanValue\": {\n                                          \"type\": \"boolean\",\n                                          \"description\": \"A boolean value.\"\n                                        },\n                                        \"referenceValue\": {\n                                          \"description\": \"A reference to a document. For example: `projects/{project_id}/databases/{database_id}/documents/{document_path}`.\",\n                                          \"type\": \"string\"\n                                        },\n                                        \"integerValue\": {\n                                          \"type\": \"string\",\n                                          \"format\": \"int64\",\n                                          \"description\": \"An integer value.\"\n                                        },\n                                        \"stringValue\": {\n                                          \"type\": \"string\",\n                                          \"description\": \"A string value. The string, represented as UTF-8, must not exceed 1 MiB - 89 bytes. Only the first 1,500 bytes of the UTF-8 representation are considered by queries.\"\n                                        },\n                                        \"timestampValue\": {\n                                          \"type\": \"string\",\n                                          \"format\": \"google-datetime\",\n                                          \"description\": \"A timestamp value. Precise only to microseconds. When stored, any additional precision is rounded down.\"\n                                        }\n                                      },\n                                      \"type\": \"object\"\n                                    },\n                                    \"type\": \"array\"\n                                  }\n                                },\n                                \"type\": \"object\",\n                                \"description\": \"An array value.\"\n                              },\n                              \"nullValue\": {\n                                \"enumDescriptions\": [\"Null value.\"],\n                                \"enum\": [\"NULL_VALUE\"],\n                                \"type\": \"string\",\n                                \"description\": \"A null value.\"\n                              },\n                              \"mapValue\": {\n                                \"description\": \"A map value.\",\n                                \"type\": \"object\",\n                                \"properties\": {\n                                }\n                              },\n                              \"booleanValue\": {\n                                \"type\": \"boolean\",\n                                \"description\": \"A boolean value.\"\n                              },\n                              \"referenceValue\": {\n                                \"description\": \"A reference to a document. For example: `projects/{project_id}/databases/{database_id}/documents/{document_path}`.\",\n                                \"type\": \"string\"\n                              },\n                              \"integerValue\": {\n                                \"type\": \"string\",\n                                \"format\": \"int64\",\n                                \"description\": \"An integer value.\"\n                              },\n                              \"stringValue\": {\n                                \"type\": \"string\",\n                                \"description\": \"A string value. The string, represented as UTF-8, must not exceed 1 MiB - 89 bytes. Only the first 1,500 bytes of the UTF-8 representation are considered by queries.\"\n                              },\n                              \"timestampValue\": {\n                                \"type\": \"string\",\n                                \"format\": \"google-datetime\",\n                                \"description\": \"A timestamp value. Precise only to microseconds. When stored, any additional precision is rounded down.\"\n                              }\n                            },\n                            \"type\": \"object\"\n                          },\n                          \"type\": \"array\"\n                        }\n                      },\n                      \"type\": \"object\",\n                      \"description\": \"An array value.\"\n                    },\n                    \"nullValue\": {\n                      \"enumDescriptions\": [\"Null value.\"],\n                      \"enum\": [\"NULL_VALUE\"],\n                      \"type\": \"string\",\n                      \"description\": \"A null value.\"\n                    },\n                    \"mapValue\": {\n                      \"description\": \"A map value.\",\n                      \"type\": \"object\",\n                      \"properties\": {\n                      }\n                    },\n                    \"booleanValue\": {\n                      \"type\": \"boolean\",\n                      \"description\": \"A boolean value.\"\n                    },\n                    \"referenceValue\": {\n                      \"description\": \"A reference to a document. For example: `projects/{project_id}/databases/{database_id}/documents/{document_path}`.\",\n                      \"type\": \"string\"\n                    },\n                    \"integerValue\": {\n                      \"type\": \"string\",\n                      \"format\": \"int64\",\n                      \"description\": \"An integer value.\"\n                    },\n                    \"stringValue\": {\n                      \"type\": \"string\",\n                      \"description\": \"A string value. The string, represented as UTF-8, must not exceed 1 MiB - 89 bytes. Only the first 1,500 bytes of the UTF-8 representation are considered by queries.\"\n                    },\n                    \"timestampValue\": {\n                      \"type\": \"string\",\n                      \"format\": \"google-datetime\",\n                      \"description\": \"A timestamp value. Precise only to microseconds. When stored, any additional precision is rounded down.\"\n                    }\n                  },\n                  \"type\": \"object\"\n                },\n                \"type\": \"array\"\n              }\n            },\n            \"type\": \"object\",\n            \"description\": \"An array value.\"\n          },\n          \"nullValue\": {\n            \"enumDescriptions\": [\"Null value.\"],\n            \"enum\": [\"NULL_VALUE\"],\n            \"type\": \"string\",\n            \"description\": \"A null value.\"\n          },\n          \"mapValue\": {\n            \"description\": \"A map value.\",\n            \"type\": \"object\",\n            \"properties\": {\n            }\n          },\n          \"booleanValue\": {\n            \"type\": \"boolean\",\n            \"description\": \"A boolean value.\"\n          },\n          \"referenceValue\": {\n            \"description\": \"A reference to a document. For example: `projects/{project_id}/databases/{database_id}/documents/{document_path}`.\",\n            \"type\": \"string\"\n          },\n          \"integerValue\": {\n            \"type\": \"string\",\n            \"format\": \"int64\",\n            \"description\": \"An integer value.\"\n          },\n          \"stringValue\": {\n            \"type\": \"string\",\n            \"description\": \"A string value. The string, represented as UTF-8, must not exceed 1 MiB - 89 bytes. Only the first 1,500 bytes of the UTF-8 representation are considered by queries.\"\n          },\n          \"timestampValue\": {\n            \"type\": \"string\",\n            \"format\": \"google-datetime\",\n            \"description\": \"A timestamp value. Precise only to microseconds. When stored, any additional precision is rounded down.\"\n          }\n        },\n        \"type\": \"object\"\n      },\n      \"type\": \"object\"\n    }\n  }\n}"
+		},
+		{
+			"key": "document_path",
+			"dataType": "STRING_VALUE"
+		},
+		{
+			"key": "document_id",
+			"dataType": "STRING_VALUE",
+			"inputOutputType": "IN"
+		}
+	],
+	"integrationConfigParameters": [
+		{
+			"parameter": {
+				"key": "`CONFIG_PROJECT_ID`",
+				"dataType": "STRING_VALUE",
+				"defaultValue": {
+					"stringValue": "<PROJECT_ID>"
+				},
+				"displayName": "`CONFIG_PROJECT_ID`"
+			},
+			"value": {
+				"stringValue": "<PROJECT_ID>"
+			}
+		},
+		{
+			"parameter": {
+				"key": "`CONFIG_DATABASE_ID`",
+				"dataType": "STRING_VALUE",
+				"defaultValue": {
+					"stringValue": "(default)"
+				},
+				"displayName": "`CONFIG_DATABASE_ID`"
+			},
+			"value": {
+				"stringValue": "(default)"
+			}
+		}
+	],
+	"databasePersistencePolicy": "",
+	"cloudLoggingDetails": {
+		"cloudLoggingSeverity": "",
+		"enableCloudLogging": false
+	}
+}

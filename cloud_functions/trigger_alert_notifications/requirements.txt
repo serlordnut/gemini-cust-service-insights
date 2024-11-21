@@ -1,0 +1,7 @@
+functions-framework==3.*
+google-cloud
+google-api-core>=2.10.0
+urllib3==1.26.12
+google-cloud
+google-cloud-aiplatform
+google-cloud-pubsub

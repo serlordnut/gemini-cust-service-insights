@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<ProxyEndpoint name="default">
+    <PreFlow name="PreFlow">
+        <Request>
+            <Step>
+                <Name>verify-api-key</Name>
+                <Condition>request.verb != "OPTIONS"</Condition>
+            </Step>
+            <Step>
+                <Name>remove-authorization</Name>
+                <Condition>request.verb != "OPTIONS"</Condition>
+            </Step>
+            <Step>
+                <Name>impose-quota</Name>
+                <Condition>request.verb != "OPTIONS"</Condition>
+            </Step>
+        </Request>
+        <Response/>
+    </PreFlow>
+    <Flows>
+        <Flow name="OptionsPreFlight">
+            <Request>
+                <Step>
+                    <Name>add-cors</Name>
+                </Step>
+            </Request>
+            <Response/>
+            <Condition>request.verb == "OPTIONS" AND request.header.origin != null AND request.header.Access-Control-Request-Method != null</Condition>
+        </Flow>
+        <Flow name="get /cases">
+            <Description>Retrieve cases</Description>
+            <Request>
+                <Step>
+                    <Name>Get-All-Cases-SIR</Name>
+                </Step>
+                <Step>
+                    <Name>Integration-Callout</Name>
+                </Step>
+                <Step>
+                    <Name>Extract-Get-All-Cases-Response</Name>
+                </Step>
+            </Request>
+            <Response>
+                <Step>
+                    <Name>Assign-Message-Final-Response</Name>
+                </Step>
+            </Response>
+            <Condition>(proxy.pathsuffix MatchesPath "/cases") and (request.verb = "GET")</Condition>
+        </Flow>
+        <Flow name="post /cases">
+            <Description>Create a new cases entry</Description>
+            <Request/>
+            <Response/>
+            <Condition>(proxy.pathsuffix MatchesPath "/cases") and (request.verb = "POST")</Condition>
+        </Flow>
+        <Flow name="get /cases/{case_id}">
+            <Description>Retrieve a specific cases</Description>
+            <Request>
+                <Step>
+                    <Name>Extract-Get-Case-CaseId</Name>
+                </Step>
+                <Step>
+                    <Name>Get-Case-Integration-Request</Name>
+                </Step>
+                <Step>
+                    <Name>Integration-Callout</Name>
+                </Step>
+                <Step>
+                    <Name>Extract-Get-Case-Response</Name>
+                </Step>
+            </Request>
+            <Response>
+                <Step>
+                    <Name>Assign-Message-Final-Response</Name>
+                </Step>
+            </Response>
+            <Condition>(proxy.pathsuffix MatchesPath "/cases/*") and (request.verb = "GET")</Condition>
+        </Flow>
+        <Flow name="put /cases/{case_id}">
+            <Description>Update a transcript</Description>
+            <Request/>
+            <Response/>
+            <Condition>(proxy.pathsuffix MatchesPath "/cases/*") and (request.verb = "PUT")</Condition>
+        </Flow>
+        <Flow name="delete /cases/{cases_id}">
+            <Description>Delete a transcript</Description>
+            <Request/>
+            <Response/>
+            <Condition>(proxy.pathsuffix MatchesPath "/cases/*") and (request.verb = "DELETE")</Condition>
+        </Flow>
+        <Flow name="get /cases/{cases_id}/action_items">
+            <Description/>
+            <Request>
+                <Step>
+                    <Name>Extract-Get-Case-Action-items-CaseId</Name>
+                </Step>
+                <Step>
+                    <Name>Get-Case_ActionItems-Integration-Request</Name>
+                </Step>
+                <Step>
+                    <Name>Integration-Callout</Name>
+                </Step>
+                <Step>
+                    <Name>Extract-Get-Case-Action-Items-Response</Name>
+                </Step>
+            </Request>
+            <Response>
+                <Step>
+                    <Name>Assign-Message-Final-Response</Name>
+                </Step>
+            </Response>
+            <Condition>(proxy.pathsuffix MatchesPath "/cases/*/action_items") and (request.verb = "GET")</Condition>
+        </Flow>
+    </Flows>
+    <PostFlow name="PostFlow">
+        <Request>
+            <Step>
+                <Name>add-cors</Name>
+            </Step>
+        </Request>
+        <Response/>
+    </PostFlow>
+    <HTTPProxyConnection>
+        <BasePath>/transcripts/v1</BasePath>
+    </HTTPProxyConnection>
+    <RouteRule name="NoRoute"/>
+</ProxyEndpoint>

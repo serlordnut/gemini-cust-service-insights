@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<AssignMessage continueOnError="false" enabled="true" name="Assign-Message-Final-Response">
+    <DisplayName>Assign Message Final Response</DisplayName>
+    <AssignVariable>
+        <Name>response.content</Name>
+        <Ref>flow.finalResponse</Ref>
+    </AssignVariable>
+    <Set>
+        <Headers>
+            <Header name="Content-Type">application/json</Header>
+        </Headers>
+    </Set>
+    <IgnoreUnresolvedVariables>true</IgnoreUnresolvedVariables>
+    <AssignTo createNew="false" transport="http" type="response"/>
+</AssignMessage>
